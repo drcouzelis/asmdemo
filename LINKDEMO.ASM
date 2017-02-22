@@ -1,10 +1,13 @@
+; Link Assembly Language Demo
+; David Couzelis
+; 1999
 
 
+        .MODEL SMALL
 
-
-	.MODEL SMALL
 
         .386
+
         
         .STACK 100h
 
@@ -12,6 +15,7 @@
         .DATA
 
 
+; A bitmap of the hero...
 pic_link  DB    000d,000d,000d,000d,000d,000d,191d,191d,191d,191d,191d,000d,000d,000d,000d,000d 
           DB    000d,000d,000d,000d,000d,191d,002d,010d,010d,002d,002d,191d,000d,000d,000d,000d 
           DB    000d,000d,000d,000d,191d,191d,002d,191d,191d,002d,002d,002d,191d,191d,000d,000d 
@@ -29,6 +33,7 @@ pic_link  DB    000d,000d,000d,000d,000d,000d,191d,191d,191d,191d,191d,000d,000d
           DB    000d,000d,000d,191d,191d,006d,006d,006d,191d,191d,191d,191d,191d,191d,000d,000d 
           DB    000d,000d,000d,000d,191d,191d,191d,191d,191d,191d,191d,191d,191d,000d,000d,000d 
 
+; A bitmap of some grass...
 pic_grass DB    118d,118d,118d,118d,118d,165d,118d,118d,118d,165d,165d,118d,118d,165d,165d,118d
           DB    118d,165d,165d,165d,165d,118d,118d,165d,118d,118d,118d,118d,118d,118d,118d,118d
           DB    118d,118d,118d,118d,118d,118d,118d,118d,118d,165d,118d,118d,118d,118d,165d,165d
@@ -46,7 +51,7 @@ pic_grass DB    118d,118d,118d,118d,118d,165d,118d,118d,118d,165d,165d,118d,118d
           DB    118d,165d,165d,118d,118d,165d,165d,118d,118d,118d,118d,118d,118d,118d,118d,118d
           DB    118d,118d,118d,165d,118d,118d,118d,118d,118d,118d,118d,118d,165d,165d,118d,118d
 
-
+; A bitmap of a rock
 pic_rock  DB    118d,118d,118d,118d,118d,165d,118d,118d,118d,165d,165d,118d,118d,165d,165d,118d
           DB    118d,165d,165d,165d,165d,118d,118d,165d,118d,118d,118d,118d,118d,118d,118d,118d
           DB    118d,118d,118d,118d,118d,118d,118d,118d,118d,165d,118d,118d,118d,118d,165d,165d
@@ -65,7 +70,6 @@ pic_rock  DB    118d,118d,118d,118d,118d,165d,118d,118d,118d,165d,165d,118d,118d
           DB    142d,142d,140d,140d,191d,191d,191d,191d,191d,191d,140d,140d,140d,142d,142d,142d
 
 
-
 pos_x      DW    50
 pos_y      DW    50
 x_loops    DW    ?
@@ -80,10 +84,10 @@ inkey    DB      ?
 x_count  DW      ?
 y_count  DW      ?
 
-Hi      DB      'Hi $'
+Hi      DB      'Hi $'    ; Something to print, for debugging purposes...
 
 
-	.CODE
+        .CODE
 
 
 ; Move cursor to the next line...
@@ -155,12 +159,12 @@ draw_pic_16x16  MACRO  pic_array, x_pos, y_pos
 
 
 ;get_inkey  PROC
-;       ; Check for key input...
+;        ; Check for key input...
 ;        mov     ah, 01h
 ;        int     16h
 ;        jz      game_start      ; No key is pressed...
 ;        mov     inkey, ah
-
+;
 ;        up_key_check:
 ;        mov     dh, inkey
 ;        cmp     dh, UpSC        ; Check up key press...
@@ -168,37 +172,34 @@ draw_pic_16x16  MACRO  pic_array, x_pos, y_pos
 ;        mov     cx, 10
 ;        sub     pos_y, cx
 ;        jmp     game_start
-
+;
 ;        down_key_check:
 ;        mov     dh, inkey
-;        cmp     dh, DownSC        ; Check down key press...
+;        cmp     dh, DownSC      ; Check down key press...
 ;        jne     end_key_check
 ;        mov     cx, pos_y
 ;        add     cx, 10
 ;        mov     pos_y, cx
 ;        jmp     game_start
-        
+;
 ;        end_key_check:
 ;        ;_PutStr Hi
 ;        mov     ah, inkey
 ;        cmp     ah, EnterSC     ; Check "end program" key's scan code...
 ;        jne     game_start
-
+;
 ;        ret
 ;get_inkey  ENDP
 
 
 
 Main    PROC
-	mov	ax, @data
-	mov	ds, ax
+        mov     ax, @data
+        mov     ds, ax
 
         ; Set DOS screen mode...
         mov     ax, 0013h
         int     10h
-
-
-
 
 
         game_start:
@@ -269,7 +270,7 @@ Main    PROC
         mov     ax, 0003h
         int     10h
         mov     ax, 4C00h       ; Return code of 0...
-	int	21h
+        int     21h
 
 Main    ENDP
 

@@ -1,9 +1,10 @@
 # Link Assembly Language Demo
 
-David Couzelis
-1999
+David Couzelis, 1999
 
 A mockup of a video game, written in assembly language for educational purposes. Uses "INT 13h" to write graphics to the screen. Press any key to quit.
+
+![Screenshot](/screenshot.png?raw=true)
 
 * Written in Microsoft Macro Assembler (MASM).
 * Compiled with Turbo Assembler (TASM).
